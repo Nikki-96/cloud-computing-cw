@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'com.gradle.build-scan' version '2.0.2'
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+
+springBoot {
+    buildInfo {
+        properties {
+            artifact = "cloud-computing-cw"
+            group = "com.cloud"
+            name = "cloud-computing-cw"
+            version = "0.0.1-SNAPSHOT"
+        }
+    }
+}
+
+sourceCompatibility = 1.8
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'com.github.joschi.jackson:jackson-datatype-threetenbp:2.6.4'
+    implementation 'org.apache.commons:commons-lang3:3.4'
+    implementation 'org.modelmapper:modelmapper:2.1.1'
+    implementation 'org.json:json:20190722'
+    implementation 'com.zaxxer:HikariCP:3.3.1'
+    implementation 'mysql:mysql-connector-java:8.0.18'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+    testCompileOnly('org.projectlombok:lombok')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'junit:junit:4.12'
+    components {
+        withModule('org.springframework:spring-beans') {
+            allVariants {
+                withDependencyConstraints {
+                    // Need to patch constraints because snakeyaml is an optional dependency
+                    it.findAll { it.name == 'snakeyaml' }.each { it.version { strictly '1.19' } }
+                }
+            }
+        }
+    }
+}
