@@ -21,11 +21,7 @@ import java.util.List;
 @Api(value = "car", description = "the car API")
 public interface CarController {
 
-    @ApiOperation(value = "Find car by modelId", nickname = "getCarsByModelName", notes = "Returns list of car for modelName", response = Car.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "petstore_auth", scopes = {
-            @AuthorizationScope(scope = "read:cars", description = "read your pets")
-            })
-    }, tags={ "car", })
+    @ApiOperation(value = "Find car by modelId", nickname = "getCarsByModelName", notes = "Returns list of car for modelName", response = Car.class, responseContainer = "List", tags={ "car", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Car.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid modelId supplied", response = ModelApiResponse.class),
@@ -36,11 +32,7 @@ public interface CarController {
     ResponseEntity<List<Car>> getCarsByModelName(@ApiParam(value = "Name of model of car to return",required=true) @PathVariable("modelName") String modelName);
 
 
-    @ApiOperation(value = "Find price by carID", nickname = "getOptionByCarID", notes = "Returns a price for carID", response = Option.class, responseContainer = "List", authorizations = {
-        @Authorization(value = "petstore_auth", scopes = {
-            @AuthorizationScope(scope = "read:cars", description = "read your pets")
-            })
-    }, tags={ "car", })
+    @ApiOperation(value = "Find price by carID", nickname = "getOptionByCarID", notes = "Returns a price for carID", response = Option.class, responseContainer = "List", tags={ "car", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Option.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid modelId supplied", response = ModelApiResponse.class),
@@ -51,11 +43,7 @@ public interface CarController {
     ResponseEntity<List<Option>> getOptionByCarID(@ApiParam(value = "ID of car price which needs to be return",required=true) @PathVariable("carID") Long carID);
 
 
-    @ApiOperation(value = "Find price by carID", nickname = "getPriceByCarID", notes = "Returns a price for carID", response = Car.class, authorizations = {
-        @Authorization(value = "petstore_auth", scopes = {
-            @AuthorizationScope(scope = "read:cars", description = "read your pets")
-            })
-    }, tags={ "car", })
+    @ApiOperation(value = "Find price by carID", nickname = "getPriceByCarID", notes = "Returns a price for carID", response = Car.class, tags={ "car", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = Car.class),
         @ApiResponse(code = 400, message = "Invalid modelId supplied", response = ModelApiResponse.class),
