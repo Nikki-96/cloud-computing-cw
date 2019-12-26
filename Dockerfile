@@ -1,3 +1,8 @@
+ARG MYSQL_URL
+ARG MYSQL_USERNAME
+ARG MYSQL_PASSWORD
+ARG MYSQL_POOL_NAME
+
 FROM openjdk:8-alpine AS BUILD_IMAGE
 ENV APP_BUILD_HOME=/root/dev/cloud-computing-cw
 WORKDIR ${APP_BUILD_HOME}
@@ -18,4 +23,4 @@ WORKDIR ${APP_PROD_HOME}
 COPY --from=BUILD_IMAGE /root/dev/cloud-computing-cw/build/libs/cloud-computing-cw.jar .
 EXPOSE 8080
 #ENTRYPOINT exec java -Djavax.net.ssl.trustStore=$TRUSTSTORE -Djavax.net.ssl.trustStorePassword=$TRUSTSTORE_PASSWORD -jar batch-api.jar
-ENTRYPOINT exec java -DMYSQL_URL="jdbc:mysql://db4free.net:3306/nikkitest" -DMYSQL_USERNAME="nikki123" -DMYSQL_PASSWORD="admin1234" -DMYSQL_POOL_NAME="cloud_cw_pool" -jar cloud-computing-cw.jar
+ENTRYPOINT exec java -DMYSQL_URL=${MYSQL_URL} -DMYSQL_USERNAME=${MYSQL_USERNAME} -DMYSQL_PASSWORD=${MYSQL_PASSWORD} -DMYSQL_POOL_NAME=${MYSQL_POOL_NAME} -jar cloud-computing-cw.jar
